@@ -95,7 +95,9 @@
                         name="password"
                         type="password"
                         placeholder="Create a password"
-                        class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                        class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                        autocomplete="off"
+                    >
                 </div>
                 <p class="text-sm text-red-500 ml-2 h-5"><?= $validation_errors['password'] ?? '' ?></p>
             </div>
@@ -108,7 +110,9 @@
                         name="password_confirmation"
                         type="password"
                         placeholder="Confirm your password"
-                        class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                        class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                        autocomplete="off"
+                    >
                 </div>
                 <p class="text-sm text-red-500 ml-2 h-5"><?= $validation_errors['password_confirmation'] ?? '' ?></p>
             </div>

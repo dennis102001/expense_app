@@ -87,7 +87,8 @@
                             type="email"
                             placeholder="Enter your email"
                             value="<?= htmlspecialchars($form_data['email'] ?? '') ?>"
-                            class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                            class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                        >
                     </div>
                     <p class="text-sm text-red-500 ml-2 h-5"><?= $validation_errors['email'] ?? '' ?></p>
                 </div>
@@ -100,7 +101,9 @@
                             name="password"
                             type="password"
                             placeholder="Enter your password"
-                            class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                            class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                            autocomplete="off"
+                        >
                     </div>
                     <p class="text-sm text-red-500 ml-2 h-5"><?= $validation_errors['password'] ?? '' ?></p>
                 </div>
@@ -112,7 +115,7 @@
                     </label>
 
                     <a href="forgot_password" class="text-blue-600 font-medium hover:underline">
-                        Forgot password??
+                        Forgot password?
                     </a>
                 </div>
 

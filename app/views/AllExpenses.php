@@ -33,7 +33,7 @@
 </div>
 
 <!-- Header -->
-<header class="bg-gradient-to-r from-blue-500 to-blue-900 text-white p-5 shadow-lg">
+<header class="bg-gradient-to-r from-blue-500 to-blue-900 text-white p-5 shadow-lg sticky top-0 z-40">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
         <h1 class="text-xl font-bold flex items-center gap-3">
             <i class="fas fa-chart-line"></i> ExpenseTracker Dashboard
