@@ -4,11 +4,14 @@ session_start();
 require_once '../app/core/Autoloader.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$env = parse_ini_file(__DIR__.'/../.env');
+if (file_exists(__DIR__ . '/../.env')) {
+    $env = parse_ini_file(__DIR__ . '/../.env');
 
-foreach($env as $key => $value){
-    $_ENV[$key] = $value;
-    
+    if ($env !== false) {
+        foreach ($env as $key => $value) {
+            $_ENV[$key] = $value;
+        }
+    }
 }
 
 require_once '../app/routes.php';
