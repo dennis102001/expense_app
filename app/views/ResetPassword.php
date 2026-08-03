@@ -98,7 +98,7 @@
 
 </div>
 
-<script src="/Personal_Expense_Tracker/public/js/app.js"></script>
+<script src="<?= $appUrl ?>/js/app.js"></script>
 
 </body>
 </html>
