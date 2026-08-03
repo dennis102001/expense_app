@@ -14,4 +14,6 @@ if (file_exists(__DIR__ . '/../.env')) {
     }
 }
 
+$appUrl = getenv('APP_URL') ?: ($_ENV['APP_URL'] ?? '');
+
 require_once '../app/routes.php';
