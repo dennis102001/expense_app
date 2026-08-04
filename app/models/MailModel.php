@@ -50,7 +50,9 @@ class MailModel extends Model{
         $mail = new PHPMailer(true);
 
         $mail->isSMTP();
-        $mail->Host = getenv('MAIL_HOST') ?: ($_ENV['MAIL_HOST'] ?? '');
+        $mail->Host = gethostbyname(
+            getenv('MAIL_HOST') ?: ($_ENV['MAIL_HOST'] ?? '')
+        );
         $mail->SMTPAuth = true;
         $mail->Username = getenv('MAIL_USERNAME') ?: ($_ENV['MAIL_USERNAME'] ?? '');
         $mail->Password = getenv('MAIL_PASSWORD') ?: ($_ENV['MAIL_PASSWORD'] ?? '');
