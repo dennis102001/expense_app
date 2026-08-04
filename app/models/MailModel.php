@@ -28,11 +28,18 @@ class MailModel extends Model{
             $mail = self::createMailer();
             $mail->addAddress($email);
             $mail->Subject = "Account Activation";
-            $mail->Body = "This email contains link to activate your account from Expense Tracker App. Disregard if you do not know about this. Click to activate your account: <a href='$link'>$link</a>";
+            $mail->Body = "This email contains a link to activate your account. <a href='$link'>$link</a>";
+
+            $mail->SMTPDebug = 2;
+            $mail->Debugoutput = 'error_log';
+
             $mail->send();
 
             return true;
-        } catch (PHPMailerException $e) {
+        } catch (\Exception $e) {
+            error_log('PHPMailer Error: ' . $mail->ErrorInfo);
+            error_log($e->getMessage());
+
             return false;
         }
 
