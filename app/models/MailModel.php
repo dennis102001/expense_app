@@ -38,16 +38,23 @@ class MailModel extends Model{
 
     }
 
-    public static function createMailer(){
+    public static function createMailer()
+    {
         $mail = new PHPMailer(true);
+
         $mail->isSMTP();
-        $mail->Host = $_ENV['MAIL_HOST'];
+        $mail->Host = getenv('MAIL_HOST') ?: ($_ENV['MAIL_HOST'] ?? '');
         $mail->SMTPAuth = true;
-        $mail->Username = $_ENV['MAIL_USERNAME'];
-        $mail->Password = $_ENV['MAIL_PASSWORD'];
-        $mail->SMTPSecure = $_ENV['MAIL_ENCRYPTION'];
-        $mail->Port = (int) $_ENV['MAIL_PORT'];
-        $mail->setFrom($_ENV['MAIL_USERNAME'], $_ENV['MAIL_FROM_NAME']);
+        $mail->Username = getenv('MAIL_USERNAME') ?: ($_ENV['MAIL_USERNAME'] ?? '');
+        $mail->Password = getenv('MAIL_PASSWORD') ?: ($_ENV['MAIL_PASSWORD'] ?? '');
+        $mail->SMTPSecure = getenv('MAIL_ENCRYPTION') ?: ($_ENV['MAIL_ENCRYPTION'] ?? '');
+        $mail->Port = (int) (getenv('MAIL_PORT') ?: ($_ENV['MAIL_PORT'] ?? 587));
+
+        $mail->setFrom(
+            getenv('MAIL_USERNAME') ?: ($_ENV['MAIL_USERNAME'] ?? ''),
+            getenv('MAIL_FROM_NAME') ?: ($_ENV['MAIL_FROM_NAME'] ?? '')
+        );
+
         $mail->isHTML(true);
 
         return $mail;
