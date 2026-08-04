@@ -23,7 +23,8 @@ class AuthController extends Controller {
             $expiry = date("Y-m-d H:i:s", strtotime('+1 hour'));
 
             if($userModel->saveResetToken($email, $token, $expiry)){
-                $resetLink = "http://localhost/Personal_Expense_Tracker/public/reset_password?token=$token";
+                $appUrl = getenv('APP_URL') ?: ($_ENV['APP_URL'] ?? '');
+                $resetLink = "$appUrl/reset_password?token=$token";
                 
                 MailModel::sendResetLink($email, $resetLink);
             }
@@ -143,7 +144,8 @@ class AuthController extends Controller {
         $verificationToken = bin2hex(random_bytes(32));
 
         if($userModel->signup($name, $email, $password, $verificationToken)){
-            $link = "http://localhost/Personal_Expense_Tracker/public/verify_email?token=$verificationToken";
+            $appUrl = getenv('APP_URL') ?: ($_ENV['APP_URL'] ?? '');
+            $link = "$appUrl/verify_email?token=$verificationToken";
 
             MailModel::sendEmailVerification($email, $link);
 
@@ -404,7 +406,8 @@ class AuthController extends Controller {
             $verificationToken = bin2hex(random_bytes(32));
 
             if($userModel->updateVerificationToken($verificationToken, $email)){
-                $link = "http://localhost/Personal_Expense_Tracker/public/verify_email?token=$verificationToken";
+                $appUrl = getenv('APP_URL') ?: ($_ENV['APP_URL'] ?? '');
+                $link = "$appUrl/verify_email?token=$verificationToken";
 
                 MailModel::sendEmailVerification($email, $link);
 
