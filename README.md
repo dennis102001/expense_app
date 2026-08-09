@@ -1,60 +1,130 @@
 # Expense Tracker App
 
-A simple web app to track expenses, budgets, and categories using PHP (MVC), JS, and Tailwind CSS.
+A simple web application for tracking expenses, budgets, and categories, built using PHP with a custom MVC architecture, JavaScript, and Tailwind CSS.
 
 ## Features
+
 - User registration and login
+- Email verification for new accounts
 - Add, edit, delete expenses
 - Track budgets by month
 - Categorize expenses
 - View remaining budget
-- View total amount of expenses
+- View total expenses
+- Password reset via email
 
 ## Tech Stack
+
 - PHP (MVC architecture)
 - JavaScript
 - Tailwind CSS
 - MySQL (database)
+- Brevo API (Transactional Email)
 
-## Setup Instructions
+## Local Setup
 
-1. **Clone this repository to your local machine using Git**
+### 1. Clone the repository
 
-2. **Import the database:**  
-    - Open phpMyAdmin  
-    - Import `database/database.sql`  
-    *(The SQL file already creates the database for you)*
+Clone this repository to your local machine using Git.
 
-3. **Create a .env file in the project root to store your configuration settings**
-    
-4. **Add database configuration in .env:**
-   ```env
-   DB_HOST=localhost
-   DB_USER=root
-   DB_PASS=
-   DB_NAME=expense_app
-   APP_ENV=local
-   ```
+### 2. Import the database
+
+Open **phpMyAdmin** and import:
+
+```text
+database/database.sql
+``` 
    
-5. **Email Setup (Required for User Registration)**
+The SQL file already creates the required database and tables.
 
-   This app uses email to send verification links for new users. To make it work with Gmail:
+### 3. Create the .env file 
 
-      1. Enable **2-Step Verification** on your Google account.
-      2. Go to **App Passwords** in Google Security settings.
-      3. Generate a **16-character app password** for Mail (custom name: Expense Tracker).
-      4. Add the credentials to `.env`:
+Create a `.env` file in the project root.
+
+Example:
+
+```env
+APP_ENV=local
+APP_URL=http://localhost/Personal_Expense_Tracker/public
+
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=expense_app
+DB_USER=root
+DB_PASS=
+
+MAIL_USERNAME=your-verified-email@example.com
+MAIL_FROM_NAME=Expense Tracker App
+BREVO_API_KEY=your_brevo_api_key
+```
+   
+### 4. Configure email
+The application uses the **Brevo API** to send transactional emails such as account verification and password reset emails.
+
+Create a Brevo account, generate an API key, and add it to your `.env` file:
+
+Make sure the sender email used by the application is verified in Brevo.
          
-         ```env
-         MAIL_USERNAME=youremail@gmail.com
-         MAIL_PASSWORD=yourapppasswordhere
-         MAIL_FROM_NAME=Expense Tracker App
-         MAIL_HOST=smtp.gmail.com
-         MAIL_PORT=587
-         MAIL_ENCRYPTION=tls
-         ```
-         
-6. Run the project in your local server (XAMPP, WAMP, etc.)
+### 5. Run the application
 
-Notes:
-    - CSRF protection is not implemented yet (will be added in future updates)
+The application uses Apache for local development. It can be run using XAMPP, WAMP, or another local Apache/PHP environment.
+
+With the current XAMPP setup, access the application at:
+
+```text
+http://localhost/Personal_Expense_Tracker/public
+```
+
+The `/public` directory is the application's entry point.
+
+## Environment Configuration
+
+The application uses environment variables so the same codebase can work in both local and production environments.
+
+### Local
+
+```env
+APP_ENV=local
+APP_URL=http://localhost/Personal_Expense_Tracker/public
+
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=expense_app
+DB_USER=root
+DB_PASS=
+
+MAIL_USERNAME=your-verified-email@example.com
+MAIL_FROM_NAME=Expense Tracker App
+BREVO_API_KEY=your_brevo_api_key
+```
+
+### Production
+
+```env
+APP_ENV=production
+APP_URL=https://your-production-domain.com
+
+DB_HOST=your-database-host
+DB_PORT=your-production-database-port
+DB_NAME=your-database-name
+DB_USER=your-database-user
+DB_PASS=your-database-password
+
+MAIL_USERNAME=your-verified-email@example.com
+MAIL_FROM_NAME=Expense Tracker App
+BREVO_API_KEY=your_brevo_api_key
+```
+
+> Do not commit your `.env` file or API keys to the repository.
+
+## Deployment
+
+The application is deployed to Render using Docker.
+
+The included `Dockerfile` is used only for the production deployment. Local development does not require Docker and uses XAMPP/Apache instead.
+
+## Notes
+- The application uses the `public` directory as its entry point.
+- `APP_URL` is used for generating application links, redirects, asset URLs, and email verification links.
+- Email sending uses the Brevo HTTP API instead of SMTP.
+- CSRF protection is not implemented yet and is planned for a future update.
