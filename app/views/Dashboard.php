@@ -312,44 +312,155 @@
 <?php
     $addExpenseModalClass = !empty($_SESSION['add_expense_errors']) ? '' : 'hidden';
 ?>
-<div id="add-expense-modal" class="z-50 h-full w-full overflow-hidden fixed top-0 bg-black bg-opacity-50 flex justify-center <?= $addExpenseModalClass?>">
-    <div class="overflow-auto grid place-items-center size-full p-2">
-        <div class="bg-white rounded-xl w-96 p-6 relative">
-            <h2 class="text-xl font-bold mb-4">Add Expense</h2>
-            <form action="add_expense" method="POST" class="">
+<div
+    id="add-expense-modal"
+    class="fixed top-0 z-50 flex h-full w-full items-center justify-center bg-black/50 p-4 backdrop-blur-sm <?= $addExpenseModalClass ?>"
+>
+    <div class="w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl">
+
+        <!-- Header -->
+        <div class="border-b border-gray-100 px-6 py-5">
+            <div class="flex items-center gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 text-blue-600">
+                    <i class="fa-solid fa-receipt"></i>
+                </div>
+
                 <div>
-                    <label class="block text-gray-700">Date</label>
-                    <input type="date" name="date" class="w-full border p-2 rounded" value="<?= htmlspecialchars($_SESSION['expense_form_data']['date'] ?? '') ?>">
-                    <p class="text-sm text-red-500 h-5"><?= $_SESSION['add_expense_errors']['date'] ?? '' ?></p>
+                    <h2 class="text-lg font-semibold text-gray-900">
+                        Add Expense
+                    </h2>
+
+                    <p class="text-sm text-gray-500">
+                        Record a new expense.
+                    </p>
                 </div>
-                <div class="mb-5">
-                    <label class="block text-gray-700">Category</label>
-                    <select name="category_id" class="bg-gray-100 border p-2 rounded focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150 w-full">
-                        <option value="0">None</option>
-                        
-                        <?php foreach($categories as $category): ?>
-                            <option value="<?= (int)$category['id'] ?>" <?= (($_SESSION['expense_form_data']['category_id'] ?? 0) == $category['id']) ? 'selected' : ''?>>
-                                <?= htmlspecialchars($category['category_name']) ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-gray-700">Description</label>
-                    <input type="text" name="description" class="w-full border p-2 rounded" value="<?= htmlspecialchars($_SESSION['expense_form_data']['description'] ?? '') ?>">
-                    <p class="text-sm text-red-500 h-5"><?= $_SESSION['add_expense_errors']['description'] ?? '' ?></p>
-                </div>
-                <div>
-                    <label class="block text-gray-700">Amount</label>
-                    <input type="number" step="0.01" name="amount" class="w-full border p-2 rounded" value="<?= (float)($_SESSION['expense_form_data']['amount'] ?? 0) ?>">
-                    <p class="text-sm text-red-500 h-5"><?= $_SESSION['add_expense_errors']['amount'] ?? '' ?></p>
-                </div>
-                <div class="flex justify-end gap-3">
-                    <button type="button" onclick="closeModal('add-expense-modal')" class="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300">Cancel</button>
-                    <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">Add</button>
-                </div>
-            </form>
+            </div>
         </div>
+
+        <!-- Form -->
+        <form action="add_expense" method="POST" class="px-6 py-5">
+
+            <!-- Date -->
+            <div>
+                <label
+                    for="expense-date"
+                    class="mb-1.5 block text-sm font-medium text-gray-700"
+                >
+                    Date
+                </label>
+
+                <input
+                    id="expense-date"
+                    type="date"
+                    name="date"
+                    value="<?= htmlspecialchars($_SESSION['expense_form_data']['date'] ?? '') ?>"
+                    class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                >
+
+                <p class="mt-1 min-h-4 text-xs text-red-500">
+                    <?= $_SESSION['add_expense_errors']['date'] ?? '' ?>
+                </p>
+            </div>
+
+            <!-- Category -->
+            <div class="mb-4">
+                <label
+                    for="expense-category"
+                    class="mb-1.5 block text-sm font-medium text-gray-700"
+                >
+                    Category
+                </label>
+
+                <select
+                    id="expense-category"
+                    name="category_id"
+                    class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                >
+                    <option value="0">None</option>
+
+                    <?php foreach($categories as $category): ?>
+                        <option
+                            value="<?= (int)$category['id'] ?>"
+                            <?= (($_SESSION['expense_form_data']['category_id'] ?? 0) == $category['id']) ? 'selected' : '' ?>
+                        >
+                            <?= htmlspecialchars($category['category_name']) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <!-- Description -->
+            <div>
+                <label
+                    for="expense-description"
+                    class="mb-1.5 block text-sm font-medium text-gray-700"
+                >
+                    Description
+                </label>
+
+                <input
+                    id="expense-description"
+                    type="text"
+                    name="description"
+                    value="<?= htmlspecialchars($_SESSION['expense_form_data']['description'] ?? '') ?>"
+                    placeholder="e.g. Lunch, transportation..."
+                    class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                >
+
+                <p class="mt-1 min-h-4 text-xs text-red-500">
+                    <?= $_SESSION['add_expense_errors']['description'] ?? '' ?>
+                </p>
+            </div>
+
+            <!-- Amount -->
+            <div class="mb-4">
+                <label
+                    for="expense-amount"
+                    class="mb-1.5 block text-sm font-medium text-gray-700"
+                >
+                    Amount
+                </label>
+
+                <div class="relative">
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">
+                        ₱
+                    </span>
+
+                    <input
+                        id="expense-amount"
+                        type="number"
+                        step="0.01"
+                        name="amount"
+                        value="<?= (float)($_SESSION['expense_form_data']['amount'] ?? 0) ?>"
+                        placeholder="0.00"
+                        class="w-full rounded-lg border border-gray-300 py-2 pl-8 pr-3 text-sm text-gray-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                    >
+                </div>
+
+                <p class="mt-1 min-h-4 text-xs text-red-500">
+                    <?= $_SESSION['add_expense_errors']['amount'] ?? '' ?>
+                </p>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex gap-3">
+                <button
+                    type="button"
+                    onclick="closeModal('add-expense-modal')"
+                    class="w-1/2 rounded-lg bg-gray-100 px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    class="w-1/2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                >
+                    Add Expense
+                </button>
+            </div>
+
+        </form>
     </div>
 </div>
 <?php
