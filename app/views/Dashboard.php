@@ -39,11 +39,9 @@
         <h1 class="text-xl font-bold flex items-center gap-3">
             <i class="fas fa-chart-line"></i> ExpenseTracker Dashboard
         </h1>
-        <form action="logout" method="POST">
-            <button type="submit" class="bg-white text-blue-800 px-4 py-2 rounded-lg font-semibold hover:bg-gray-200">
-                Logout
-            </button>
-        </form>
+        <button type="button" command="show-modal" commandfor="logout-modal" class="bg-white text-blue-800 px-4 py-2 rounded-lg font-semibold hover:bg-gray-200">
+            Logout
+        </button>
     </div>
 </header>
 
@@ -438,27 +436,68 @@
 <div id="delete-category-modal" class="z-50 h-full w-full overflow-hidden fixed top-0 bg-black bg-opacity-50 flex justify-center hidden">
     <div class="overflow-auto grid place-items-center size-full p-2">
         <div class="bg-white rounded-xl w-96 p-6 relative">
-        <h2 class="text-xl font-bold mb-4">Confirm deletion</h2>
-        <form action="delete_category" method="POST" class="space-y-4">
-            <input type="hidden" name="category_id" id="delete-category-id">
-            <input type="hidden" name="redirect" value="dashboard">
+            <h2 class="text-xl font-bold mb-4">Confirm deletion</h2>
+            <form action="delete_category" method="POST" class="space-y-4">
+                <input type="hidden" name="category_id" id="delete-category-id">
+                <input type="hidden" name="redirect" value="dashboard">
 
-            <div>
-                <p>Are you sure you want to delete "<span id="delete-category-name" class="font-medium"></span>"?</p>
-            </div>
-    
-            <div class="flex justify-end gap-3">
-                <button type="button" onclick="closeModal('delete-category-modal')" class="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300">
-                    Cancel
-                </button>
-                <button type="submit" class="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700">
-                    Delete
-                </button>
-            </div>
-        </form>
+                <div>
+                    <p>Are you sure you want to delete "<span id="delete-category-name" class="font-medium"></span>"?</p>
+                </div>
+        
+                <div class="flex justify-end gap-3">
+                    <button type="button" onclick="closeModal('delete-category-modal')" class="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700">
+                        Delete
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+
+<dialog id="logout-modal" class="w-full max-w-sm rounded-2xl p-0 shadow-2xl backdrop:bg-black/50 backdrop:backdrop-blur-sm">
+    <div class="p-6">
+        <div class="mb-5 flex flex-col items-center gap-2">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-red-100 text-red-600">
+                <!-- Logout icon -->
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </div>
+
+            <div class="text-center">
+                <h2 class="text-lg font-semibold text-gray-900">
+                    Confirm logout
+                </h2>
+
+                <p class="mt-1 text-sm leading-5 text-gray-500">
+                    Are you sure you want to log out of your account?
+                </p>
+            </div>
+        </div>
+
+        <div class="flex flex-row justify-end gap-3">
+            <button
+                command="close"
+                commandfor="logout-modal"
+                type="button"
+                class="rounded-sm w-1/2 bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300"
+            >
+                Cancel
+            </button>
+
+            <form action="logout" method="POST" class="w-1/2 ">
+                <button
+                    type="submit"
+                    class="rounded-sm w-full bg-red-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                >
+                    Logout
+                </button>
+            </form>
+        </div>
+    </div>
+</dialog>
 
 <script src="<?= $appUrl ?>/js/app.js"></script>
 
