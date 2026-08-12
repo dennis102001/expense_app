@@ -314,7 +314,7 @@
 ?>
 <div
     id="add-expense-modal"
-    class="fixed top-0 z-50 flex h-full w-full items-center justify-center bg-black/50 p-4 backdrop-blur-sm <?= $addExpenseModalClass ?>"
+    class="fixed top-0 z-40 flex h-full w-full items-center justify-center bg-black/50 p-4 backdrop-blur-sm <?= $addExpenseModalClass ?>"
 >
     <div class="w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl">
 
@@ -475,46 +475,173 @@
 <?php
     $updateExpenseModalClass = !empty($_SESSION['update_expense_errors']) ? '' : 'hidden';
 ?>
-<div id="update-expense-modal" class="z-50 h-full w-full overflow-hidden fixed top-0 bg-black bg-opacity-50 flex justify-center <?= $updateExpenseModalClass ?>">
-    <div class="overflow-auto grid place-items-center size-full p-2">
-        <div class="bg-white rounded-xl w-96 p-6 relative">
-            <h2 class="text-xl font-bold mb-4">Update Expense</h2>
-            <form action="update_expense" method="POST" class="">
-                <input type="hidden" name="id" id="update-expense-id" value="<?= (int)($_SESSION['expense_form_data']['id'] ?? 0) ?>">
-                <input type="hidden" name="redirect" value="dashboard">
-                <div>
-                    <label class="block text-gray-700">Date</label>
-                    <input type="date" name="date" id="update-expense-date" class="w-full border p-2 rounded" value="<?= htmlspecialchars($_SESSION['expense_form_data']['date'] ?? '') ?>">
-                    <p class="text-sm text-red-500 h-5"><?= $_SESSION['update_expense_errors']['date'] ?? '' ?></p>
+<div
+    id="update-expense-modal"
+    class="fixed top-0 z-40 flex h-full w-full items-center justify-center bg-black/50 p-4 backdrop-blur-sm <?= $updateExpenseModalClass ?>"
+>
+    <div class="w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl">
+        
+        <!-- Header -->
+        <div class="border-b border-gray-100 px-6 py-5">
+            <div class="flex items-center gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 text-blue-600">
+                    <i class="fa-solid fa-pen-to-square"></i>
                 </div>
-                <div class="mb-5">
-                    <label class="block text-gray-700">Category</label>
-                    <select name="category_id" id="update-expense-category-id" class="bg-gray-100 border p-2 rounded focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150 w-full">
+
+                <div>
+                    <h2 class="text-lg font-semibold text-gray-900">
+                        Update Expense
+                    </h2>
+
+                    <p class="text-sm text-gray-500">
+                        Update the details of this expense.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form -->
+        <form action="update_expense" method="POST" class="px-6 py-5">
+            
+            <input 
+                type="hidden" 
+                name="id" 
+                id="update-expense-id" 
+                value="<?= (int)($_SESSION['expense_form_data']['id'] ?? 0) ?>"
+            >
+            
+            <input 
+                type="hidden" 
+                name="redirect" 
+                value="dashboard"
+            >
+
+            <!-- Date -->
+            <div>
+                <label 
+                    for="update-expense-date" 
+                    class="mb-1.5 block text-sm font-medium text-gray-700"
+                >
+                    Date
+                </label>
+
+                <input 
+                    type="date" 
+                    name="date" 
+                    id="update-expense-date" 
+                    class="w-full rounded-lg border cursor-pointer border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                    value="<?= htmlspecialchars($_SESSION['expense_form_data']['date'] ?? '') ?>"
+                >
+
+                <p class="mt-1 min-h-4 text-xs text-red-500">
+                    <?= $_SESSION['update_expense_errors']['date'] ?? '' ?>
+                </p>
+            </div>
+
+            <!-- Category -->
+            <div class="mb-4">
+                <label 
+                    for="update-expense-category-id" 
+                    class="mb-1.5 block text-sm font-medium text-gray-700"
+                >
+                    Category
+                </label>
+
+                <div class="relative">
+
+                
+                    <select 
+                        name="category_id" 
+                        id="update-expense-category-id" 
+                        class="w-full rounded-lg appearance-none cursor-pointer border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                    >
                         <option value="0">None</option>
                         
                         <?php foreach($categories as $category): ?>
-                            <option value="<?= (int)$category['id'] ?>" <?= (($_SESSION['expense_form_data']['category_id'] ?? 0) == $category['id']) ? 'selected' : ''?>>
+                            <option 
+                                value="<?= (int)$category['id'] ?>" <?= (($_SESSION['expense_form_data']['category_id'] ?? 0) == $category['id']) ? 'selected' : ''?>
+                            >
                                 <?= htmlspecialchars($category['category_name']) ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
+
+                    <i class="fa-solid fa-chevron-down pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-400"></i>
                 </div>
-                <div>
-                    <label class="block text-gray-700">Description</label>
-                    <input type="text" name="description" id="update-expense-description" class="w-full border p-2 rounded" value="<?= htmlspecialchars($_SESSION['expense_form_data']['description'] ?? '') ?>">
-                    <p class="text-sm text-red-500 h-5"><?= $_SESSION['update_expense_errors']['description'] ?? '' ?></p>
+            </div>
+
+            <!-- Description -->
+            <div>
+                <label 
+                    for="update-expense-description"
+                    class="mb-1.5 block text-sm font-medium text-gray-700"
+                >
+                    Description
+                </label>
+
+                <input 
+                    type="text" 
+                    name="description" 
+                    id="update-expense-description" 
+                    class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                    placeholder="e.g. Lunch, transportation..."
+                    value="<?= htmlspecialchars($_SESSION['expense_form_data']['description'] ?? '') ?>"
+                >
+
+                <p class="mt-1 min-h-4 text-xs text-red-500">
+                    <?= $_SESSION['update_expense_errors']['description'] ?? '' ?>
+                </p>
+            </div>
+
+            <!-- Amount -->
+            <div class="mb-4">
+                <label 
+                    for="update-expense-amount"
+                    class="mb-1.5 block text-sm font-medium text-gray-700"
+                >
+                    Amount
+                </label>
+
+                <div class="relative">
+
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">
+                        ₱
+                    </span>
+                
+                    <input 
+                        type="number" 
+                        step="0.01" 
+                        name="amount" 
+                        id="update-expense-amount" 
+                        class="w-full rounded-lg border border-gray-300 py-2 pl-8 pr-3 text-sm text-gray-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                        placeholder="0.00"
+                        value="<?= (float)($_SESSION['expense_form_data']['amount'] ?? 0) ?>"
+                    >
                 </div>
-                <div>
-                    <label class="block text-gray-700">Amount</label>
-                    <input type="number" step="0.01" name="amount" id="update-expense-amount" class="w-full border p-2 rounded" value="<?= (float)($_SESSION['expense_form_data']['amount'] ?? 0) ?>">
-                    <p class="text-sm text-red-500 h-5"><?= $_SESSION['update_expense_errors']['amount'] ?? '' ?></p>
-                </div>
-                <div class="flex justify-end gap-3">
-                    <button type="button" onclick="closeModal('update-expense-modal')" class="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300">Cancel</button>
-                    <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">Update</button>
-                </div>
-            </form>
-        </div>
+
+                <p class="mt-1 min-h-4 text-xs text-red-500">
+                    <?= $_SESSION['update_expense_errors']['amount'] ?? '' ?>
+                </p>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex gap-3">
+                <button 
+                    type="button" 
+                    onclick="closeModal('update-expense-modal')" 
+                    class="w-1/2 rounded-lg bg-gray-100 px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300"
+                >
+                    Cancel
+                </button>
+
+                <button 
+                    type="submit" 
+                    class="w-1/2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                >
+                    Update
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 <?php
