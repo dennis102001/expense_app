@@ -354,7 +354,7 @@
                     type="date"
                     name="date"
                     value="<?= htmlspecialchars($_SESSION['expense_form_data']['date'] ?? '') ?>"
-                    class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                    class="w-full rounded-lg border cursor-pointer border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
                 >
 
                 <p class="mt-1 min-h-4 text-xs text-red-500">
@@ -371,22 +371,26 @@
                     Category
                 </label>
 
-                <select
-                    id="expense-category"
-                    name="category_id"
-                    class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
-                >
-                    <option value="0">None</option>
+                <div class="relative">
+                    <select
+                        id="expense-category"
+                        name="category_id"
+                        class="w-full rounded-lg appearance-none cursor-pointer border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                    >
+                        <option value="0">None</option>
 
-                    <?php foreach($categories as $category): ?>
-                        <option
-                            value="<?= (int)$category['id'] ?>"
-                            <?= (($_SESSION['expense_form_data']['category_id'] ?? 0) == $category['id']) ? 'selected' : '' ?>
-                        >
-                            <?= htmlspecialchars($category['category_name']) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
+                        <?php foreach($categories as $category): ?>
+                            <option
+                                value="<?= (int)$category['id'] ?>"
+                                <?= (($_SESSION['expense_form_data']['category_id'] ?? 0) == $category['id']) ? 'selected' : '' ?>
+                            >
+                                <?= htmlspecialchars($category['category_name']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+
+                    <i class="fa-solid fa-chevron-down pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-400"></i>
+                </div>
             </div>
 
             <!-- Description -->
