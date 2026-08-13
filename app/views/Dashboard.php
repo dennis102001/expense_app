@@ -202,7 +202,6 @@
 
         <div class="flex justify-between items-center mb-4">
             <h3 class="text-xl font-bold text-gray-800">Recent Expenses</h3>
-            
         </div>
 
         <!-- List of Expenses for LG screens -->
@@ -475,10 +474,7 @@
 <?php
     $updateExpenseModalClass = !empty($_SESSION['update_expense_errors']) ? '' : 'hidden';
 ?>
-<div
-    id="update-expense-modal"
-    class="fixed top-0 z-40 flex h-full w-full items-center justify-center bg-black/50 p-4 backdrop-blur-sm <?= $updateExpenseModalClass ?>"
->
+<div id="update-expense-modal" class="fixed top-0 z-40 flex h-full w-full items-center justify-center bg-black/50 p-4 backdrop-blur-sm <?= $updateExpenseModalClass ?>">
     <div class="w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl">
         
         <!-- Header -->
@@ -548,8 +544,6 @@
                 </label>
 
                 <div class="relative">
-
-                
                     <select 
                         name="category_id" 
                         id="update-expense-category-id" 
@@ -559,7 +553,8 @@
                         
                         <?php foreach($categories as $category): ?>
                             <option 
-                                value="<?= (int)$category['id'] ?>" <?= (($_SESSION['expense_form_data']['category_id'] ?? 0) == $category['id']) ? 'selected' : ''?>
+                                value="<?= (int)$category['id'] ?>" 
+                                <?= (($_SESSION['expense_form_data']['category_id'] ?? 0) == $category['id']) ? 'selected' : ''?>
                             >
                                 <?= htmlspecialchars($category['category_name']) ?>
                             </option>
@@ -649,49 +644,82 @@
 ?>
 
 <!-- Delete confirmation for expense -->
-<div id="delete-expense-modal" class="z-50 h-full w-full overflow-hidden fixed top-0 bg-black bg-opacity-50 flex justify-center hidden">
-    <div class="overflow-auto grid place-items-center size-full p-2">
-        <div class="bg-white rounded-xl w-96 p-6 relative">
-        <h2 class="text-xl font-bold mb-4">Confirm deletion</h2>
-        <form action="delete_expense" method="POST" class="space-y-4">
-            <input type="hidden" name="id" id="delete-expense-id">
-            <input type="hidden" name="redirect" value="dashboard">
+<div id="delete-expense-modal" class="fixed top-0 z-50 flex h-full w-full items-center justify-center bg-black/50 p-4 backdrop-blur-sm hidden">
+    <div class="w-full max-w-sm overflow-hidden rounded-2xl bg-white shadow-2xl">
 
-            <div>
-                <p>Are you sure you want to delete "<span id="delete-expense-desc" class="font-medium"></span>"?</p>
+        <div class="p-6">
+            
+            <!-- Header -->
+            <div class="mb-5 flex flex-col items-center gap-2">
+                <div class="flex h-10 w-10 items-center justify-center rounded-full bg-red-100 text-red-600">
+                    <i class="fa-solid fa-trash"></i>
+                </div>
+
+                <div class="text-center">
+                    <h2 class="text-lg font-semibold text-gray-900">
+                        Delete expense?
+                    </h2>
+
+                    <p class="mt-1 text-sm leading-5 text-gray-500">
+                        Are you sure you want to delete
+                        "<span id="delete-expense-desc" class="font-medium text-gray-700"></span>"?
+                    </p>
+                </div>
             </div>
-    
-            <div class="flex justify-end gap-3">
-                <button type="button" onclick="closeModal('delete-expense-modal')" class="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300">
-                    Cancel
-                </button>
-                <button type="submit" class="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700">
-                    Delete
-                </button>
-            </div>
-        </form>
+            
+            <!-- Form -->
+            <form action="delete_expense" method="POST">
+                <input type="hidden" name="id" id="delete-expense-id">
+                <input type="hidden" name="redirect" value="dashboard">
+        
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeModal('delete-expense-modal')" class="w-1/2 rounded-lg bg-gray-100 px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                        Cancel
+                    </button>
+                    <button type="submit" class="w-1/2 rounded-lg bg-red-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                        Delete
+                    </button>
+                </div>
+            </form>
+
         </div>
     </div>
 </div>
 
 <!-- Delete confirmation for category -->
-<div id="delete-category-modal" class="z-50 h-full w-full overflow-hidden fixed top-0 bg-black bg-opacity-50 flex justify-center hidden">
-    <div class="overflow-auto grid place-items-center size-full p-2">
-        <div class="bg-white rounded-xl w-96 p-6 relative">
-            <h2 class="text-xl font-bold mb-4">Confirm deletion</h2>
-            <form action="delete_category" method="POST" class="space-y-4">
+<div id="delete-category-modal" class="fixed top-0 z-50 flex h-full w-full items-center justify-center bg-black/50 p-4 backdrop-blur-sm hidden">
+    <div class="w-full max-w-sm overflow-hidden rounded-2xl bg-white shadow-2xl">
+        
+        <div class="p-6">
+            <!-- Header -->
+            <div class="mb-5 flex flex-col items-center gap-2">
+                <div class="flex h-10 w-10 items-center justify-center rounded-full bg-red-100 text-red-600">
+                    <i class="fa-solid fa-trash"></i>
+                </div>
+
+                <div class="text-center">
+                    <h2 class="text-lg font-semibold text-gray-900">
+                        Delete category?
+                    </h2>
+
+                    <p class="mt-1 text-sm leading-5 text-gray-500">
+                        Are you sure you want to delete
+                        "<span id="delete-category-name" class="font-medium text-gray-700"></span>"?
+                    </p>
+                </div>
+            </div>
+
+            <!-- Form -->
+            <form action="delete_category" method="POST">
                 <input type="hidden" name="category_id" id="delete-category-id">
                 <input type="hidden" name="redirect" value="dashboard">
-
-                <div>
-                    <p>Are you sure you want to delete "<span id="delete-category-name" class="font-medium"></span>"?</p>
-                </div>
         
-                <div class="flex justify-end gap-3">
-                    <button type="button" onclick="closeModal('delete-category-modal')" class="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300">
+                <!-- Actions -->
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeModal('delete-category-modal')" class="w-1/2 rounded-lg bg-gray-100 px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
                         Cancel
                     </button>
-                    <button type="submit" class="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700">
+                    <button type="submit" class="w-1/2 rounded-lg bg-red-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                         Delete
                     </button>
                 </div>
@@ -700,6 +728,7 @@
     </div>
 </div>
 
+<!-- Logout Modal -->
 <dialog id="logout-modal" class="w-full max-w-sm rounded-2xl p-0 shadow-2xl backdrop:bg-black/50 backdrop:backdrop-blur-sm">
     <div class="p-6">
         <div class="mb-5 flex flex-col items-center gap-2">
@@ -724,7 +753,7 @@
                 command="close"
                 commandfor="logout-modal"
                 type="button"
-                class="rounded-sm w-1/2 bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300"
+                class="w-1/2 rounded-lg bg-gray-100 px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300"
             >
                 Cancel
             </button>
@@ -732,7 +761,7 @@
             <form action="logout" method="POST" class="w-1/2 ">
                 <button
                     type="submit"
-                    class="rounded-sm w-full bg-red-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                    class="w-full rounded-lg bg-red-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                 >
                     Logout
                 </button>
