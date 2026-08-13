@@ -371,7 +371,7 @@
 ?>
 
 <!-- Delete expense confirmation -->
-<div id="delete-expense-modal" class="fixed top-0 z-50 flex h-full w-full items-center justify-center bg-black/50 p-4 backdrop-blur-sm hidden">
+<div id="delete-expense-modal" class="fixed top-0 z-40 flex h-full w-full items-center justify-center bg-black/50 p-4 backdrop-blur-sm hidden">
     <div class="w-full max-w-sm overflow-hidden rounded-2xl bg-white shadow-2xl">
 
          <div class="p-6">
