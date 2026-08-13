@@ -58,13 +58,13 @@ if(flash){
 
     setTimeout(() => {
         flash.classList.add('opacity-0', '-translate-y-2');
-    }, 3000);
+    }, 5000);
 
     setTimeout(
         function(){
             flash.remove();
         },
-        3500
+        5500
     )
 }    
 

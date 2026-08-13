@@ -14,21 +14,39 @@
 <body class="bg-gray-100 min-h-screen">
 
 <!-- Flash message -->
-<div class="w-full flex items-center justify-center absolute top-4 z-50">
+<div class="pointer-events-none fixed left-1/2 top-4 z-50 w-full -translate-x-1/2 px-4">
     <?php if(!empty($_SESSION['flash'])) : ?>
         <?php $flash = $_SESSION['flash']; ?>
+
             <div 
                 id="flash"
-                class="flex items-start sm:items-center gap-2 p-4 text-sm shadow-sm rounded-md font-semibold w-80 transition-all translate-y-0
+                class="pointer-events-auto mx-auto flex w-full max-w-sm items-center gap-3 rounded-xl border px-4 py-3 shadow-lg transition-all duration-500
                     <?= $flash['type'] === 'success'
-                        ? 'bg-white text-green-700' 
-                        : 'bg-red-200 text-red-700' 
+                        ? 'border-green-200 bg-white text-green-700' 
+                        : 'border-red-200 bg-white text-red-700' 
                     ?>
                 "
             >
-                <i class="fa-solid fa-circle-info"></i>
-                <?= $flash['message'] ?>    
+                <!-- Icon -->
+                <div
+                    class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full
+                        <?= $flash['type'] === 'success'
+                            ? 'bg-green-100 text-green-600'
+                            : 'bg-red-100 text-red-600'
+                        ?>"
+                >
+                    <i class="fa-solid <?= $flash['type'] === 'success'
+                        ? 'fa-check'
+                        : 'fa-xmark'
+                    ?>"></i>
+                </div>
+
+                <!-- Message -->
+                <p class="text-sm font-medium leading-5">
+                    <?= htmlspecialchars($flash['message']) ?>
+                </p>
             </div>
+
         <?php unset($_SESSION['flash']); ?>
     <?php endif; ?> 
 </div>
