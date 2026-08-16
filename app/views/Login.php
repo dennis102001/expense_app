@@ -140,8 +140,10 @@
 
                 <button
                     type="submit"
-                    class="w-full py-4 rounded-xl text-lg font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-900 hover:shadow-lg transition">
-                    Sign In
+                    data-loading-text="Logging in..."
+                    class="w-full py-4 rounded-xl text-lg font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-900 hover:shadow-lg transition disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                    Login
                 </button>
 
                 <p class="text-center text-gray-500">

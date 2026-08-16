@@ -125,8 +125,11 @@
                 >
             </div>
 
-            <button type="submit"
-                class="w-full py-4 rounded-xl text-lg font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-900 hover:shadow-lg transition flex items-center justify-center gap-2">
+            <button 
+                type="submit"
+                data-loading-text="Resending..."
+                class="w-full py-4 rounded-xl text-lg font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-900 hover:shadow-lg transition flex items-center justify-center gap-2 disabled:cursor-not-allowed disabled:opacity-60"
+            >
                 <i class="fas fa-paper-plane"></i>
                 Resend link
             </button>

@@ -65,7 +65,7 @@
 
 <div class="max-w-6xl mx-auto p-6 space-y-6">
 
-    <div class="rounded-2xl  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+    <div class="rounded-2xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 auto-rows-[116px] gap-2">
         
         <div class="bg-white rounded-2xl shadow p-6 flex flex-row gap-4 relative overflow-hidden">
             <div class=" flex flex-col">
@@ -82,37 +82,67 @@
                 </div>
 
                 <!-- Display Mode -->
-                <div id="budget-display-mode" class="flex items-center justify-start gap-2 overflow-hidden">
+                <div id="budget-display-mode" class="flex items-center justify-start gap-2 overflow-hidden p-1">
                     <div class="flex items-baseline gap-2 overflow-hidden">
                         <h2 class="text-3xl font-bold text-blue-800 overflow-x-auto overflow-y-hidden">
                             <?= number_format($budget['amount'] ?? 0, 2) ?>
                         </h2>
                         <span class="text-gray-500">Php</span>
                     </div>
-                    <button onclick="toggleBudgetEdit()" class="text-blue-600 hover:text-blue-800">
-                        <i class="fas fa-edit bg-blue-100 rounded-full p-2 border border-blue-600"></i>
+                    <button 
+                        onclick="toggleBudgetEdit()" 
+                        class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-blue-600 transition hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    >
+                        <i class="fa-solid fa-pen-to-square text-sm"></i>
                     </button>
                 </div>
 
                 <!-- Edit Mode -->
-                <div id="budget-edit-mode" class="hidden h-9 flex items-end">
-                    <form action="update_budget" method="POST">
+                <div id="budget-edit-mode" class="hidden flex items-end p-1">
+                    <form action="update_budget" method="POST" class="w-full">
                         <div class="flex gap-2 items-center">
-                            <div class="relative flex-1">
-                                <input type="hidden" name="redirect" value="dashboard">
-                                <input type="hidden" name="budget_id" class="w-full border p-2 rounded" value="<?= (int)$budget['id'] ?>" required>
 
-                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">₱</span>
-                                <input type="number" name="budget_amount"
+                            <input 
+                                type="hidden" 
+                                name="redirect" 
+                                value="dashboard"
+                            >
+
+                            <input 
+                                type="hidden" 
+                                name="budget_id" 
+                                class="w-full border p-2 rounded" 
+                                value="<?= (int)$budget['id'] ?>" 
+                                required
+                            >
+
+                            <div class="relative flex-1">
+                                <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">
+                                    ₱
+                                </span>
+                                
+                                <input 
+                                    type="number" 
+                                    name="budget_amount"
                                     value="<?= (float)($budget['amount'] ?? 0) ?>" 
                                     step="0.01"
-                                    class="w-full pl-8 pr-4 py-1 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                    class="w-full rounded-lg border border-gray-300 bg-white py-1.5 pl-8 pr-3 text-sm text-gray-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                                >
                             </div>
-                            <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-lg">
+                            
+                            <button 
+                                type="submit" 
+                                class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-green-500 text-white transition hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+                            >
                                 <i class="fas fa-check"></i>
                             </button>
-                            <button type="button" onclick="toggleBudgetEdit()" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-3 py-1 rounded-lg">
-                                <i class="fas fa-times"></i>
+
+                            <button 
+                                type="button" 
+                                onclick="toggleBudgetEdit()" 
+                                class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-gray-600 transition hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
+                            >
+                                <i class="fa-solid fa-xmark"></i>
                             </button>
                         </div>
                     </form>
@@ -182,22 +212,52 @@
         </div>
         
         <form method="POST" action="add_category" id="category-add-form" class="add-category w-full flex gap-4">
-            <input type="text" name="category_name" placeholder="New category name" class="border rounded px-2 py-1 border-gray-300 w-full">
+            <input 
+                type="text" 
+                name="category_name" 
+                placeholder="New category name" 
+                class="border rounded px-2 py-1 border-gray-300 w-full"
+            >
 
-            <button type="submit" class="w-24 py-1 px-4 bg-gradient-to-r from-blue-600 to-blue-900 rounded-md text-white">
-                <i class="fas fa-plus"></i> Add
+            <button 
+                type="submit"
+                data-loading-text="Adding..."
+                class="inline-flex w-24 items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+                <i class="fas fa-plus"></i> 
+                <span>Add</span>
             </button>
         </form>
 
         <form method="POST" action="update_category" id="category-update-form" class="add-category w-full flex gap-4 hidden">
-            <input type="hidden" name="category_id" id="category-id">
-            <input type="text" name="category_name" id="category-name" placeholder="New category name" class="border rounded px-2 py-1 border-gray-300 w-full">
+            <input 
+                type="hidden" 
+                name="category_id" 
+                id="category-id"
+            >
 
-            <button type="submit" class="py-1 px-4 bg-gradient-to-r from-blue-600 to-blue-900 rounded-md text-white" onclick="addCategory()">
-                Save
-            </button>
-            <button type="button" onclick="closeCategoryUpdateForm()" class="px-4 py-1 rounded bg-gray-200 hover:bg-gray-300">
+            <input 
+                type="text" 
+                name="category_name" 
+                id="category-name" 
+                placeholder="New category name" 
+                class="border rounded px-2 py-1 border-gray-300 w-full"
+            >
+
+            <button 
+                type="button" 
+                onclick="closeCategoryUpdateForm()" 
+                class="inline-flex w-24 items-center justify-center rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300"
+            >
                 Cancel
+            </button>
+            
+            <button 
+                type="submit" 
+                data-loading-text="Updating..."
+                class="inline-flex w-24 items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+                Update
             </button>
         </form>
     </div>
@@ -475,7 +535,8 @@
 
                 <button
                     type="submit"
-                    class="w-1/2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    data-loading-text="Adding..."
+                    class="w-1/2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                     Add Expense
                 </button>
@@ -648,8 +709,9 @@
                 </button>
 
                 <button 
-                    type="submit" 
-                    class="w-1/2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    type="submit"
+                    data-loading-text="Updating..."
+                    class="w-1/2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                     Update
                 </button>
@@ -691,10 +753,19 @@
                 <input type="hidden" name="redirect" value="dashboard">
         
                 <div class="flex gap-3">
-                    <button type="button" onclick="closeModal('delete-expense-modal')" class="w-1/2 rounded-lg bg-gray-100 px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                    <button 
+                        type="button" 
+                        onclick="closeModal('delete-expense-modal')" 
+                        class="w-1/2 rounded-lg bg-gray-100 px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300"
+                    >
                         Cancel
                     </button>
-                    <button type="submit" class="w-1/2 rounded-lg bg-red-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+
+                    <button 
+                        type="submit" 
+                        data-loading-text="Deleting..."
+                        class="w-1/2 rounded-lg bg-red-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+                    >
                         Delete
                     </button>
                 </div>
@@ -734,10 +805,19 @@
         
                 <!-- Actions -->
                 <div class="flex gap-3">
-                    <button type="button" onclick="closeModal('delete-category-modal')" class="w-1/2 rounded-lg bg-gray-100 px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                    <button 
+                        type="button" 
+                        onclick="closeModal('delete-category-modal')" 
+                        class="w-1/2 rounded-lg bg-gray-100 px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300"
+                    >
                         Cancel
                     </button>
-                    <button type="submit" class="w-1/2 rounded-lg bg-red-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+
+                    <button 
+                        type="submit" 
+                        data-loading-text="Deleting..."
+                        class="w-1/2 rounded-lg bg-red-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+                    >
                         Delete
                     </button>
                 </div>
@@ -779,7 +859,8 @@
             <form action="logout" method="POST" class="w-1/2 ">
                 <button
                     type="submit"
-                    class="w-full rounded-lg bg-red-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                    data-loading-text="Logging out..."
+                    class="w-full rounded-lg bg-red-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                     Logout
                 </button>

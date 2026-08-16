@@ -374,8 +374,9 @@
                 </button>
 
                 <button 
-                    type="submit" 
-                    class="w-1/2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    type="submit"
+                    data-loading-text="Updating..." 
+                    class="w-1/2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                     Update
                 </button>
@@ -418,10 +419,19 @@
                 <input type="hidden" name="redirect" value="all_expenses">
         
                 <div class="flex gap-3">
-                    <button type="button" onclick="closeModal('delete-expense-modal')" class="w-1/2 rounded-lg bg-gray-100 px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                    <button 
+                        type="button" 
+                        onclick="closeModal('delete-expense-modal')" 
+                        class="w-1/2 rounded-lg bg-gray-100 px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300"
+                    >
                         Cancel
                     </button>
-                    <button type="submit" class="w-1/2 rounded-lg bg-red-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+
+                    <button 
+                        type="submit" 
+                        data-loading-text="Deleting..."
+                        class="w-1/2 rounded-lg bg-red-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+                    >
                         Delete
                     </button>
                 </div>
@@ -464,7 +474,8 @@
             <form action="logout" method="POST" class="w-1/2 ">
                 <button
                     type="submit"
-                    class="w-full rounded-lg bg-red-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                    data-loading-text="Logging out..."
+                    class="w-full rounded-lg bg-red-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                     Logout
                 </button>

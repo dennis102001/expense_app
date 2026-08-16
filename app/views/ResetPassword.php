@@ -91,8 +91,10 @@
             <p class="text-sm text-red-500 ml-2 h-5"><?= $validation_errors['password_confirmation'] ?? '' ?></p>
         </div>
 
-        <button type="submit"
-            class="w-full py-4 rounded-xl text-lg font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-900 hover:shadow-lg transition mb-7"
+        <button 
+            type="submit"
+            data-loading-text="Updating..."
+            class="w-full py-4 rounded-xl text-lg font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-900 hover:shadow-lg transition mb-7 disabled:cursor-not-allowed disabled:opacity-60"
         >
             <i class="fas fa-paper-plane"></i>
             Reset Password

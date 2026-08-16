@@ -94,3 +94,27 @@ document.addEventListener('DOMContentLoaded', function(){
         dateElement.textContent = formatDate(date);
     }
 })
+
+document.querySelectorAll('form').forEach(form => {
+    form.addEventListener('submit', function(){
+        const button = form.querySelector('button[type="submit"]');
+
+        if(button){
+            button.disabled = true;
+
+            const loadingText = button.dataset.loadingText;
+
+            if (loadingText){
+                button.textContent = loadingText;
+            }
+            else{
+                const icon = button.querySelector('i');
+
+                if(icon){
+                    icon.className = "fas fa-spinner fa-spin"
+                }
+            }
+        }
+    });
+
+});

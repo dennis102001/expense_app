@@ -120,20 +120,24 @@
 
             <button
                 type="submit"
-                class="w-full py-4 rounded-xl text-lg font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-900 hover:shadow-lg transition">
+                data-loading-text="Creating account..."
+                class="w-full py-4 rounded-xl text-lg font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-900 hover:shadow-lg transition disabled:cursor-not-allowed disabled:opacity-60"
+            >
                 Create Account
             </button>
 
             <p class="text-center text-gray-500">
                 Already have an account?
                 <a href="login" class="text-blue-600 font-medium hover:underline">
-                    Sign in
+                    Login
                 </a>
             </p>
 
         </form>
     </div>
 </div>
+
+<script src="<?= $appUrl ?>/js/app.js"></script>
 
 </body>
 </html>
