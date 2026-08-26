@@ -63,6 +63,10 @@ The application uses the **Brevo API** to send transactional emails such as acco
 
 Create a Brevo account, generate an API key, and add it to your `.env` file:
 
+```env
+BREVO_API_KEY=your_brevo_api_key
+```
+
 Make sure the sender email used by the application is verified in Brevo.
          
 ### 5. Run the application
